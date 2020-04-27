@@ -18,14 +18,14 @@ import java.util.List;
 public class SinhVienDangKiApi {
     @Autowired
     private SinhVienDangKiServiceImpl sinhVienDangKiService;
-    @GetMapping("/admin/students")
-    public ResponseEntity<List<SinhVienDangKi>> findAll(){
-        List<SinhVienDangKi>list = sinhVienDangKiService.findAll();
-        if (list.isEmpty()){
-            return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return ResponseEntity.ok(list);
-    }
+//    @GetMapping("/admin/students")
+//    public ResponseEntity<List<SinhVienDangKi>> findAll(){
+//        List<SinhVienDangKi>list = sinhVienDangKiService.findAll();
+//        if (list.isEmpty()){
+//            return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return ResponseEntity.ok(list);
+//    }
 
     @GetMapping("/admin/students/{id}")
     public ResponseEntity<SinhVienDangKi> findByID(@PathVariable("id")Long id){
@@ -36,7 +36,7 @@ public class SinhVienDangKiApi {
         return ResponseEntity.ok(obj);
     }
 
-    @PostMapping("/api/web/students")
+    @PostMapping("/v1/api/web/students")
     public ResponseEntity<Void> insertStudent(@RequestBody SinhVienRegister sv, UriComponentsBuilder ucBuilder){
 
         if (sinhVienDangKiService.findByPassport(sv.getSoHoChieu())!=null){

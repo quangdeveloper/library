@@ -71,7 +71,9 @@
 <!-- Bootstrap core JavaScript -->
 <script src="<c:url value='/template/admin/jquery/jquery.min.js' />"></script>
 <script src="<c:url value='/template/admin/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
-
+<script src="<c:url value='/template/paging/jquery.twbsPagination.js' />"></script>
+<script src="<c:url value='/template/paging/jquery.twbsPagination.min.js'/>"></script>
+<script src="<c:url value='/ckeditor/ckeditor.js' />"></script>
 <!-- Menu Toggle Script -->
 <script>
     $("#menu-toggle").click(function (e) {

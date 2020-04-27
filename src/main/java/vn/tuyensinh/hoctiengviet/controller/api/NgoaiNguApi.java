@@ -18,7 +18,7 @@ public class NgoaiNguApi {
     @Autowired
     private NgoaiNguServiceImpl ngoaiNguService;
 
-    @GetMapping("/admin/languages")
+    @GetMapping("/v1/api/admin/languages")
     public ResponseEntity<List<NgoaiNgu>> findAll() {
         List<NgoaiNgu> list = ngoaiNguService.findAll();
         if (list.isEmpty()) {
@@ -26,7 +26,7 @@ public class NgoaiNguApi {
         }
         return ResponseEntity.ok(list);
     }
-    @GetMapping("/admin/languages/{id}")
+    @GetMapping("/v1/api/admin/languages/{id}")
     public ResponseEntity<NgoaiNgu> findByID(@PathVariable("id")Long id) {
         NgoaiNgu obj= ngoaiNguService.findByID(id);
         if (obj==null) {

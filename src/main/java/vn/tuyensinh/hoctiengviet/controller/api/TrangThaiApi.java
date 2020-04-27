@@ -16,12 +16,12 @@ public class TrangThaiApi {
     @Autowired
     private TrangThaiServiceImpl trangThaiService;
 
-    @GetMapping("/status")
+    @GetMapping("/v1/api/admin/status")
     public ResponseEntity<List<TrangThai>> getAll(){
         return ResponseEntity.ok(trangThaiService.findAll());
     }
 
-    @PostMapping("/status")
+    @PostMapping("/v1/api/admin/status")
     public ResponseEntity<TrangThai> insert(@RequestBody TrangThaiRequest trangThai){
         if (trangThaiService.findByTrangThai(trangThai.getTrangThai())!= null){
             return ResponseEntity.noContent().build();
@@ -33,7 +33,7 @@ public class TrangThaiApi {
         }
 
     }
-    @PutMapping("/status")
+    @PutMapping("/v1/api/admin/status")
     public ResponseEntity<TrangThai> update(@RequestBody TrangThaiRequest trangThai){
 
         TrangThai tt = new TrangThai();
@@ -43,7 +43,7 @@ public class TrangThaiApi {
         return ResponseEntity.ok(tt);
     }
 
-    @DeleteMapping("/status/{id}")
+    @DeleteMapping("/v1/api/admin/status/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id")Integer id){
         trangThaiService.remove(id);
         return ResponseEntity.noContent().build();

@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class
 WebConfigSecurity extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -32,7 +33,7 @@ WebConfigSecurity extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configGlobal(AuthenticationManagerBuilder auth) throws Exception{
+    public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
     }
 
@@ -42,18 +43,24 @@ WebConfigSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         //cac page khong yeu cau quyen dang nhap
-        http.authorizeRequests().antMatchers("/login", "/logout", "/web/*")
-                .permitAll();
-
-//        cac trang chi danh cho admin
-        http.authorizeRequests().antMatchers("/admin/*","/api/*")
-                .access("hasAnyRole('ROLE_SYSTEM')");
-
-//        http.authorizeRequests().antMatchers("/admin/")
-//                .access("hasAnyRole('ROLE_CONTENT')");
-//
-//        http.authorizeRequests().antMatchers("/admin","/api/admin")
-//                .access("hasAnyRole('ROLE_FILE')");
+        http.authorizeRequests().antMatchers("/login", "/logout", "/v1/web","/v1/*").permitAll();
+//      full quyen truy cap cac trang cho quyen nay
+//        http.authorizeRequests().antMatchers("/v1/admin","/v1/api/admin")
+//                .access("hasAnyRole('SYSTEM_MANAGE')");
+//      cac trang chi danh cho admin co quyen trong dinh dang duoi
+//        http.authorizeRequests().antMatchers("/v1/admin/home")
+//                .access("hasAnyRole('SYSTEM_MANAGE','FILE_UPLOAD','FILE_EDIT','FOLDER_CREATE'," +
+//                        "'FOLDER_EDIT','HEAD_BOX','MENU','HTML_PAGE','LECTURE','INFORMATION_REGISTER','PICTURE'," +
+//                        "'POST','COURSE','FEATURE')");
+////      //module quản lí giảng viên
+//        http.authorizeRequests().antMatchers("/v1/admin/lectures*","/v1/api/admin/lectures*")
+//                .access("hasAnyRole('SYSTEM_MANAGE','LECTURE','INFORMATION_REGISTER','COURSE')");
+////      //module quản lí quyền truy cập
+//        http.authorizeRequests().antMatchers("/v1/admin/roles*", "/v1/api/admin/roles*")
+//                .access("hasAnyRole('SYSTEM_MANAGE')");
+//        //module quản lí tài khoản
+//        http.authorizeRequests().antMatchers("/v1/admin/accounts*","/v1/api/admin/accounts*")//
+//                .access("hasAnyRole('SYSTEM_MANAGE')");
 
         //khi nguoi dung da dang nhap voi vai tro XX
         // nhung truy cap vao trang yeu cau vai tro YY
@@ -64,12 +71,12 @@ WebConfigSecurity extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/j_spring_security_check")//submit URL trang login
                 .loginPage("/login")//URL page login
-                .defaultSuccessUrl("/admin/home")//login thanh cong se toi trang nay
+                .defaultSuccessUrl("/v1/admin/home")//login thanh cong se toi trang nay
                 .failureUrl("/login?error=true")//neu loi xay ra se tra ve link nay
                 .usernameParameter("username")//lay username tren URL
                 .passwordParameter("password")//lay password tren URL
                 .and().logout().logoutUrl("/logout")//nhan URL tu trang html
-                .logoutSuccessUrl("/web");//cau hinh cho logout page
+                .logoutSuccessUrl("/v1/web");//cau hinh cho logout page
 
         //cau hinh cho remenber me
         http.authorizeRequests().and().rememberMe()

@@ -9,8 +9,8 @@ public class KhoaHocRequest {
     private String moTa;
     private String noiDung;
     private Double hocPhi;
-    private Timestamp ngayBatDau;
-    private Timestamp ngayKetThuc;
+    private String ngayBatDau;
+    private String ngayKetThuc;
     private Integer trangThai;
     private String nguoiSua;
     private String nguoiTao;
@@ -66,19 +66,19 @@ public class KhoaHocRequest {
         this.hocPhi = hocPhi;
     }
 
-    public Timestamp getNgayBatDau() {
+    public String getNgayBatDau() {
         return ngayBatDau;
     }
 
-    public void setNgayBatDau(Timestamp ngayBatDau) {
+    public void setNgayBatDau(String ngayBatDau) {
         this.ngayBatDau = ngayBatDau;
     }
 
-    public Timestamp getNgayKetThuc() {
+    public String getNgayKetThuc() {
         return ngayKetThuc;
     }
 
-    public void setNgayKetThuc(Timestamp ngayKetThuc) {
+    public void setNgayKetThuc(String ngayKetThuc) {
         this.ngayKetThuc = ngayKetThuc;
     }
 

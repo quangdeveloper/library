@@ -1,12 +1,15 @@
 package vn.tuyensinh.hoctiengviet.services.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.tuyensinh.hoctiengviet.constant.Constant;
 import vn.tuyensinh.hoctiengviet.entity.GiangVien;
+import vn.tuyensinh.hoctiengviet.model.request.GiangVienRequest;
 import vn.tuyensinh.hoctiengviet.repository.GiangVienRepository;
+import vn.tuyensinh.hoctiengviet.repository.GioiTinhRepository;
 import vn.tuyensinh.hoctiengviet.services.GiangVienService;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -27,24 +30,25 @@ public class GiangVienServiceImpl implements GiangVienService {
 
     @Override
     public GiangVien findByLectureID(Long gvid) {
-        return giangVienRepository.findByLectureID(gvid);
+        return giangVienRepository.findByID(gvid);
+    }
+
+    @Autowired
+    private GioiTinhRepository gioiTinhRepository;
+    @Override
+    public void insert(GiangVienRequest gv) {
+        GiangVien giangVien = new GiangVien();
+        BeanUtils.copyProperties(gv,giangVien);
+        giangVien.setGioiTinh(gioiTinhRepository.findByID(gv.getGioiTinh()));
+        giangVienRepository.save(giangVien);
     }
 
     @Override
-    public void insert(GiangVien gv) {
-        giangVienRepository.save(gv);
-
-    }
-
-//    @Override
-//    public void update(GiangVien gv) {
-//
-//        giangVienRepository.update(gv.getDiaChi(),gv.getEmail(),gv.getSoDienThoai(),
-//                gv.getNgayKetThuc(),gv.getId());
-//    }
-    @Override
-    public void update(GiangVien gv) {
-        giangVienRepository.save(gv);
+    public void update(GiangVienRequest gv) {
+        GiangVien giangVien = new GiangVien();
+        BeanUtils.copyProperties(gv, giangVien);
+        giangVien.setGioiTinh(gioiTinhRepository.findByID(gv.getGioiTinh()));
+        giangVienRepository.save(giangVien);
     }
 
     @Override

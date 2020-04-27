@@ -18,7 +18,7 @@ public class GioiTinhApi {
     @Autowired
     private GioiTinhServiceImpl gioiTinhService;
 
-    @GetMapping("/admin/genders")
+    @GetMapping("/v1/api/admin/genders")
     public ResponseEntity<List<GioiTinh>> findAll() {
         List<GioiTinh> list = gioiTinhService.findAll();
         if (list.isEmpty()) {
@@ -26,7 +26,7 @@ public class GioiTinhApi {
         }
         return ResponseEntity.ok(list);
     }
-    @GetMapping("/admin/genders/{id}")
+    @GetMapping("/v1/api/admin/genders/{id}")
     public ResponseEntity<GioiTinh> findByID(@PathVariable("id")Integer id) {
         GioiTinh obj= gioiTinhService.findByID(id);
         if (obj==null) {

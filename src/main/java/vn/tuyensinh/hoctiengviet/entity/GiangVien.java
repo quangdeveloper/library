@@ -36,6 +36,18 @@ public class GiangVien {
     @Column(name = "ngayketthuc")
     private Timestamp ngayKetThuc;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "gioitinh", nullable = false)
+    private GioiTinh gioiTinh;
+
+    public GioiTinh getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(GioiTinh gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
     public GiangVien() {
     }
 

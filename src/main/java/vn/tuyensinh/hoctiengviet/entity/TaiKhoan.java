@@ -1,6 +1,7 @@
 package vn.tuyensinh.hoctiengviet.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "taikhoan", uniqueConstraints = {@UniqueConstraint(name = "taikhoan_UK",
@@ -14,7 +15,7 @@ public class TaiKhoan extends Base {
     private String matKhau;
 
     @Column(name = "hovaten")
-    private String hovaTen;
+    private String hoVaTen;
 
     @Column(name = "email")
     private String email;
@@ -30,12 +31,26 @@ public class TaiKhoan extends Base {
     @JoinColumn(name = "trangthai", nullable = false)
     private TrangThai trangThai;
 
-    public String getHovaTen() {
-        return hovaTen;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "permissions",
+            joinColumns = {@JoinColumn(name = "taikhoan_id")},
+            inverseJoinColumns ={@JoinColumn(name = "quyen_id")})
+    private Set<Quyen> quyenSet;
+
+    public Set<Quyen> getQuyenSet() {
+        return quyenSet;
     }
 
-    public void setHovaTen(String hovaTen) {
-        this.hovaTen = hovaTen;
+    public void setQuyenSet(Set<Quyen> quyenSet) {
+        this.quyenSet = quyenSet;
+    }
+
+    public String getHoVaTen() {
+        return hoVaTen;
+    }
+
+    public void setHoVaTen(String hoVaTen) {
+        this.hoVaTen = hoVaTen;
     }
 
     public String getEmail() {

@@ -2,10 +2,11 @@ package vn.tuyensinh.hoctiengviet.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "quyen", uniqueConstraints = {@UniqueConstraint(name = "quyen_UK", columnNames = "tenquyen")})
-public class Quyen extends  BaseSmall{
+public class Quyen extends BaseSmall {
 
     @Column(name = "tenquyen", nullable = false)
     private String tenQuyen;
@@ -13,14 +14,22 @@ public class Quyen extends  BaseSmall{
     @Column(name = "mota")
     private String moTa;
 
-    @Column(name = "nhomquyen")
-    private Integer nhomQuyen;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "nhomquyen", nullable = false)
+    private NhomQuyen nhomQuyen;
 
-    public Integer getNhomQuyen() {
+    @ManyToMany(mappedBy = "quyenSet", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Set<TaiKhoan> taiKhoanSet;
+
+    public NhomQuyen getNhomQuyen() {
         return nhomQuyen;
     }
 
-    public void setNhomQuyen(Integer nhomQuyen) {
+    public Set<TaiKhoan> getTaiKhoanSet() {
+        return taiKhoanSet;
+    }
+
+    public void setNhomQuyen(NhomQuyen nhomQuyen) {
         this.nhomQuyen = nhomQuyen;
     }
 

@@ -15,4 +15,5 @@ public interface TrangThaiService {
     void remove(Integer id);
 
     TrangThai findByTrangThai(String tt);
+    TrangThai findByID(Integer id);
 }

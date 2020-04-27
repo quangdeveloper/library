@@ -8,9 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import vn.tuyensinh.hoctiengviet.constant.Constant;
+import vn.tuyensinh.hoctiengviet.constant.ConstantRole;
 import vn.tuyensinh.hoctiengviet.entity.GiangVien;
+import vn.tuyensinh.hoctiengviet.model.request.DeleteRequest;
 import vn.tuyensinh.hoctiengviet.model.request.GiangVienRequest;
 import vn.tuyensinh.hoctiengviet.services.impl.GiangVienServiceImpl;
+import vn.tuyensinh.hoctiengviet.services.impl.GioiTinhServiceImpl;
 
 
 import java.sql.Date;
@@ -26,7 +29,7 @@ public class GiangVienApi {
     private GiangVienServiceImpl giangVienService;
 
     //    Lay danh sach tat ca giang vien
-    @GetMapping("/lectures")
+    @GetMapping("/v1/lectures")
     public ResponseEntity<List<GiangVien>> findAll() {
         List<GiangVien> list = giangVienService.findAll();
         if (list.isEmpty()) {
@@ -43,7 +46,7 @@ public class GiangVienApi {
 //    }
 
     // lay thong tin giang vien thong qua id
-    @GetMapping("/lectures/{id}")
+    @GetMapping("/v1/api/admin/lectures")
     public ResponseEntity<GiangVien> findByLectureID(@PathVariable(name = "id") Long id) {
         GiangVien giangVien = giangVienService.findByLectureID(id);
         if (giangVien == null) {
@@ -53,23 +56,15 @@ public class GiangVienApi {
 
 
     }
-
+    @Autowired
+    private GioiTinhServiceImpl gioiTinhService;
     //    them moi 1 giang vien
-    @PostMapping("/lectures")
+    @PostMapping("/v1/api/admin/lectures")
     public ResponseEntity<Void> addLecture(@RequestBody GiangVienRequest gv, UriComponentsBuilder ucBuilder) {
         if (giangVienService.findByLectureCode(gv.getMaGiangVien()) != null) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         } else {
-            GiangVien giangVien = new GiangVien();
-            giangVien.setMaGiangVien(gv.getMaGiangVien());
-            giangVien.setHoVaTen(gv.getHoVaTen());
-            giangVien.setDiaChi(gv.getDiaChi());
-            giangVien.setNoiSinh(gv.getNoiSinh());
-            giangVien.setEmail(gv.getEmail());
-            giangVien.setSoDienThoai(gv.getSoDienThoai());
-            giangVien.setNgayBatDau(new Timestamp(System.currentTimeMillis()));
-            giangVien.setNgayKetThuc(Constant.dateDefault);
-            giangVienService.insert(giangVien);
+            giangVienService.insert(gv);
             HttpHeaders headers = new HttpHeaders();
             GiangVien gv1= giangVienService.findByLectureCode(gv.getMaGiangVien());
             headers.setLocation(ucBuilder.path("/lectures/{id}").buildAndExpand(gv1.getId()).toUri());
@@ -78,38 +73,45 @@ public class GiangVienApi {
     }
 
     //  sua thong tin giang vien
-    @PutMapping("/lectures")
+    @PutMapping("/v1/api/admin/lectures")
     public ResponseEntity<GiangVien> updateLecture(@RequestBody GiangVienRequest gv) {
         if (giangVienService.findByLectureID(gv.getId()) == null) {
-            return new ResponseEntity<GiangVien>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        GiangVien giangVien = new GiangVien();
-        BeanUtils.copyProperties(gv, giangVien);
-        giangVienService.update(giangVien);
-        return ResponseEntity.ok(giangVien);
+        giangVienService.update(gv);
+        return ResponseEntity.noContent().build();
 
     }
 
-    //    xoa 1 giang vien
-    @DeleteMapping("/lectures/{id}")
-    public ResponseEntity<GiangVien> removeLecture(@PathVariable(name = "id") Long id) {
-        if (giangVienService.findByLectureID(id) == null) {
-            return new ResponseEntity<GiangVien>(HttpStatus.NOT_FOUND);
-        } else {
-            giangVienService.delete(id);
+    //    xoa ds giang vien
+    @DeleteMapping("/v1/api/admin/lectures")
+    public ResponseEntity<GiangVien> removeLecture(@RequestBody DeleteRequest rq) {
+        Long ids[] = rq.getIds();
+        boolean check = false;
+        for(Long id : ids){
+            if (giangVienService.findByLectureID(id) == null){
+                check = true;
+            }
+        }
+        if (check == true){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else{
+            for (Long id : ids) {
+                giangVienService.delete(id);
+            }
             return ResponseEntity.noContent().build();
         }
     }
-
     //  xoa tat ca giang vien
-    @DeleteMapping("/lectures")
+    @DeleteMapping("/v1/api/admin/lectures/all")
     public ResponseEntity<GiangVien> removeLectures() {
         giangVienService.deleteAll();
         return ResponseEntity.noContent().build();
     }
 
     //tim kiem theo ngay bat dau va dia chi noi o hien tai
-    @GetMapping("/lectures/search")
+    @GetMapping("/v1/api/admin/lectures/search")
     public ResponseEntity<List<GiangVien>> findByDateAndAddress(@RequestParam("fromDate") Timestamp fromDate,
                                                                 @RequestParam("toDate") Timestamp toDate,
                                                                 @RequestParam("address") String address) {

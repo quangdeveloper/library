@@ -37,7 +37,7 @@ public class SinhVienDangKi {
     private String diaChi;
 
     @Column(name = "sodienthoai", nullable = false)
-    private String sodienthoai;
+    private String soDienThoai;
 
     @Column(name = "fax", nullable = false)
     private String fax;
@@ -72,7 +72,7 @@ public class SinhVienDangKi {
 
 
     @OneToMany(mappedBy = "sinhVienDangKi", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    Set<NgoaiNgu> ngoaiNguList;
+    private Set<NgoaiNgu> ngoaiNguList;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "sinhvien_thannhan",
@@ -82,9 +82,11 @@ public class SinhVienDangKi {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "sinhvien_khoahoc",
-            joinColumns = {@JoinColumn(name = "sinhvien", nullable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "khoahoc", nullable = false)})
+            joinColumns = {@JoinColumn(name = "sinhvien")},
+            inverseJoinColumns = {@JoinColumn(name = "khoahoc")})
     private Set<KhoaHoc> KhoaHocList;
+
+
 
     public Set<NgoaiNgu> getNgoaiNguList() {
         return ngoaiNguList;
@@ -177,12 +179,12 @@ public class SinhVienDangKi {
         this.diaChi = diaChi;
     }
 
-    public String getSodienthoai() {
-        return sodienthoai;
+    public String getSoDienThoai() {
+        return soDienThoai;
     }
 
-    public void setSodienthoai(String sodienthoai) {
-        this.sodienthoai = sodienthoai;
+    public void setSoDienThoai(String soDienThoai) {
+        this.soDienThoai = soDienThoai;
     }
 
     public String getFax() {

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: muado
@@ -11,6 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Error page</h1>
+<c:set var="notification" value="Bạn không có quyền truy cập trang này!"/>
+<h1>${notification}</h1>
 </body>
 </html>

@@ -23,6 +23,9 @@ public class GioiTinh {
     private Set<SinhVienDangKi> sinhVienDangKiList;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "gioiTinh")
+    private Set<GiangVien> giangVienList;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "gioiTinh")
     private Set<TaiKhoan> taiKhoanList;
     public GioiTinh() {
     }

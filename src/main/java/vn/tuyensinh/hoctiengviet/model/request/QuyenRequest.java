@@ -1,21 +1,22 @@
 package vn.tuyensinh.hoctiengviet.model.request;
 
 public class QuyenRequest {
-
-
-    private Integer id;
-    private String tenQuyen;
-    private  String moTa;
-    private Integer nhomQuyen;
+    private Integer ID;
     private String nguoiTao;
     private String nguoiSua;
+    private String moTa;
+    private String tenQuyen;
+    private Integer nhomQuyen;
 
-    public Integer getId() {
-        return id;
+    public QuyenRequest() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getID() {
+        return ID;
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
     }
 
     public String getNguoiTao() {
@@ -34,7 +35,12 @@ public class QuyenRequest {
         this.nguoiSua = nguoiSua;
     }
 
-    public QuyenRequest() {
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
     }
 
     public String getTenQuyen() {
@@ -43,14 +49,6 @@ public class QuyenRequest {
 
     public void setTenQuyen(String tenQuyen) {
         this.tenQuyen = tenQuyen;
-    }
-
-    public String getMoTa() {
-        return moTa;
-    }
-
-    public void setMoTa(String moTa) {
-        this.moTa = moTa;
     }
 
     public Integer getNhomQuyen() {

@@ -27,12 +27,13 @@ public class KhoaHoc extends Base{
     private Timestamp ngayBatDau;
 
     @Column(name = "ngayketthuc",nullable =  false)
-    private Timestamp ngayketthuc;
+    private Timestamp ngayKetThuc;
 
-    @Column(name = "trangthai", nullable =  false)
-    private Integer trangThai;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "trangthai", nullable = false)
+    private TrangThai trangThai;
 
-    @ManyToMany(mappedBy = "KhoaHocList",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "KhoaHocList",fetch = FetchType.LAZY)
     private Set<SinhVienDangKi> sinhVienDangKiList;
 
     public Timestamp getNgayBatDau() {
@@ -43,19 +44,19 @@ public class KhoaHoc extends Base{
         this.ngayBatDau = ngayBatDau;
     }
 
-    public Timestamp getNgayketthuc() {
-        return ngayketthuc;
+    public Timestamp getNgayKetThuc() {
+        return ngayKetThuc;
     }
 
-    public void setNgayketthuc(Timestamp ngayketthuc) {
-        this.ngayketthuc = ngayketthuc;
+    public void setNgayKetThuc(Timestamp ngayKetThuc) {
+        this.ngayKetThuc = ngayKetThuc;
     }
 
-    public Integer getTrangThai() {
+    public TrangThai getTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(Integer trangThai) {
+    public void setTrangThai(TrangThai trangThai) {
         this.trangThai = trangThai;
     }
 

@@ -61,4 +61,7 @@ public abstract class BaseSmall {
     public void setNguoiSua(String nguoiSua) {
         this.nguoiSua = nguoiSua;
     }
+
+    public BaseSmall() {
+    }
 }

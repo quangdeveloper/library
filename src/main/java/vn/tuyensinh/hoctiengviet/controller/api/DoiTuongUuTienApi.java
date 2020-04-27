@@ -17,7 +17,7 @@ public class DoiTuongUuTienApi {
     @Autowired
     private DoiTuongUuTienServiceImpl doiTuongUuTienService;
 
-    @GetMapping("/admin/priorities")
+    @GetMapping("/v1/api/admin/priorities")
     public ResponseEntity<List<DoiTuongUuTien>> findAll() {
         List<DoiTuongUuTien> list = doiTuongUuTienService.findAll();
         if (list.isEmpty()) {
@@ -26,7 +26,7 @@ public class DoiTuongUuTienApi {
         return ResponseEntity.ok(list);
     }
 
-    @PostMapping("/admin/priorities")
+    @PostMapping("/v1/api/admin/priorities")
     public ResponseEntity<Void> insertDoiTuongUuTien(@RequestBody DoiTuongUuTienRequest obj,
                                                      UriComponentsBuilder ucBuilder) {
         if (doiTuongUuTienService.findByTypePriorities(obj.getLoaiUuTien()) != null) {
@@ -39,7 +39,7 @@ public class DoiTuongUuTienApi {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/admin/priorities")
+    @PutMapping("/v1/api/admin/priorities")
     public ResponseEntity<DoiTuongUuTien> updatePriorities(@RequestBody DoiTuongUuTienRequest obj) {
         if (doiTuongUuTienService.findByID(obj.getId()) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -47,7 +47,7 @@ public class DoiTuongUuTienApi {
         return ResponseEntity.ok(null);
     }
 
-    @DeleteMapping("/admin/priorities/{id}")
+    @DeleteMapping("/v1/api/admin/priorities/{id}")
     public ResponseEntity<Void> deletePriorities(@PathVariable("id") Integer id) {
         if (doiTuongUuTienService.findByID(id) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -24,7 +24,7 @@ public class ThanhTichHocTapApi {
     private ThanhTichHocTapServiceImpl thanhTichHocTapService;
 
 
-    @GetMapping("/admin/academicAchievements")
+    @GetMapping("/v1/api/admin/academicAchievements")
     public ResponseEntity<List<ThanhTichHocTap>> findAll() {
         List<ThanhTichHocTap> list = thanhTichHocTapService.findAll();
         if (list.isEmpty()) {
@@ -32,7 +32,7 @@ public class ThanhTichHocTapApi {
         }
         return ResponseEntity.ok(list);
     }
-    @GetMapping("/admin/academicAchievements/{id}")
+    @GetMapping("/v1/api/admin/academicAchievements/{id}")
     public ResponseEntity<ThanhTichHocTap> findByID(@PathVariable("id")Long id) {
         ThanhTichHocTap obj= thanhTichHocTapService.findByID(id);
         if (obj==null) {
@@ -40,7 +40,7 @@ public class ThanhTichHocTapApi {
         }
         return ResponseEntity.ok(obj);
     }
-    @GetMapping("/admin/academicAchievements/students/{id}")
+    @GetMapping("/v1/api/admin/academicAchievements/students/{id}")
     public ResponseEntity<ThanhTichHocTap> findByStudentID(@PathVariable("id")Long id) {
         ThanhTichHocTap obj= thanhTichHocTapService.findByStudentID(id);
         if (obj==null) {
@@ -49,7 +49,7 @@ public class ThanhTichHocTapApi {
         return ResponseEntity.ok(obj);
     }
 
-    @DeleteMapping("/admin/academicAchievements/{id}")
+    @DeleteMapping("/v1/api/admin/academicAchievements/{id}")
     public ResponseEntity<ThanhTichHocTap> deleteByID(@PathVariable("id")Long id) {
         ThanhTichHocTap obj= thanhTichHocTapService.findByID(id);
         if (obj==null) {

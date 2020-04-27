@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="/admin/home">Trang chủ<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/v1/admin/home">Trang chủ<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Liên kết</a>
@@ -22,7 +22,7 @@
                     <a class="dropdown-item" href="#">An action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/web"> <span><i class="fa fa-sign-out" aria-hidden="true" style="color: #050614"></i></span>  Đăng xuất</a>
+                    <a class="dropdown-item" href="/v1/web"> <span><i class="fa fa-sign-out" aria-hidden="true" style="color: #050614"></i></span>  Đăng xuất</a>
                 </div>
             </li>
         </ul>

@@ -40,4 +40,9 @@ public class TrangThaiServiceImpl implements TrangThaiService {
         return trangThaiRepository.findByTrangThai(tt);
 
     }
+
+    @Override
+    public TrangThai findByID(Integer id) {
+        return  trangThaiRepository.findByID(id);
+    }
 }

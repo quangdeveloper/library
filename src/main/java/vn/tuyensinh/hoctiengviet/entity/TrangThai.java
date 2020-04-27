@@ -17,7 +17,11 @@ public class TrangThai {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "trangThai")
     private Set<TaiKhoan> taiKhoanList;
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "trangThai")
+    private Set<KhoaHoc> khoaHocs;
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "trangThai")
+    private Set<BaiViet> baiViets;
 
     public TrangThai() {
     }

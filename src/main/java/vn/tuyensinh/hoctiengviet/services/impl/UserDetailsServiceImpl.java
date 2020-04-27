@@ -8,25 +8,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import vn.tuyensinh.hoctiengviet.entity.Quyen;
 import vn.tuyensinh.hoctiengviet.entity.TaiKhoan;
+import vn.tuyensinh.hoctiengviet.repository.TaiKhoanRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private TaiKhoanServiceImpl taiKhoanService;
+    private TaiKhoanRepository taiKhoanRepository;
+
     @Autowired
-    private QuyenServiceImpl quyenService;
+    private TaiKhoanServiceImpl taiKhoanService;
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        TaiKhoan appUser = taiKhoanService.findByTaiKhoan(userName);
-        if (appUser == null) {
+        TaiKhoan taiKhoan = taiKhoanRepository.findByTaiKhoan(userName);
+        if (taiKhoan == null) {
             throw new UsernameNotFoundException("UserName: " + userName + " not found in database !!!");
         }
-        Set<String> roleNames = taiKhoanService.getRoleNames(appUser.getID());
+        List<String> roleNames = taiKhoanService.getRoleNames(taiKhoan.getID());
         List<GrantedAuthority> grandList = new ArrayList<>();
         if (roleNames != null) {
             for (String role : roleNames) {
@@ -34,10 +35,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 grandList.add(authority);
             }
         }
-        UserDetails userDetails = (UserDetails) new User(appUser.getTaiKhoan(),
-                appUser.getMatKhau(),
+        UserDetails userDetails = new User(taiKhoan.getTaiKhoan(),
+                taiKhoan.getMatKhau(),
                 grandList);
         return userDetails;
     }
-
 }

@@ -1,5 +1,7 @@
 <%@include file="/common/taglib.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:url var="APIurl" value="/v1/api/admin/accounts"/>
+<c:url var ="NewURL" value="/v1/admin/accounts"/>
 <html>
 <head>
     <title></title>
@@ -20,80 +22,249 @@
     <div class= "containnner" style=" margin-left: 50px;
             margin-top: 30px;">
         <div class="dropdown-divider"></div>
-        <form action="api/admin/accounts/add" method= "POST" >
+        <form id = "formSubmit">
             <div class="row">
                 <div class="col">
-                  ươu     <input type="text" style="width: 250px" class="form-control" placeholder="Họ và tên"><br>
+                    <label> Họ và tên:</label>
+                    <c:if test="${ not empty obj.ID}">
+                        <input type="text" style="width: 250px" class="form-control"  value="${obj.hoVaTen}" name="hoVaTen" readonly ><br>
+                    </c:if>
+                    <c:if test="${empty obj.ID}">
+                        <input type="text" style="width: 250px" class="form-control"  name="hoVaTen" placeholder="Họ và tên" required><br>
+                    </c:if>
 
-                    <label>Ngày sinh:</label>
-                    <input type="text" style="width: 250px" class="form-control" placeholder="Ngày sinh">
 
-                    <br><label>Giới tính:</label>&ensp;
+                    <label>Giới tính:</label>&ensp;
                     <div class="form-check-inline">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio" checked>Nam
+                            <c:forEach items="${genders}" var="item">
+
+                                <c:if test="${not empty obj.ID}">
+                                    <c:if test="${item.id == obj.gioiTinh.id}">
+                                        <input type="radio" class="form-check-input" name="gioiTinh" value="${item.id}" checked > ${item.gioiTinh}
+                                    </c:if>
+                                    <c:if test="${item.id != obj.gioiTinh.id}">
+                                        <input type="radio" class="form-check-input" name="gioiTinh" value="${item.id}"> ${item.gioiTinh}
+                                    </c:if>
+                                </c:if>
+
+                                <c:if test="${empty obj.ID}">
+                                    <input type="radio" class="form-check-input" name="gioiTinh" value="${item.id}" > ${item.gioiTinh}
+                                </c:if>
+                            </c:forEach>
+
                         </label>
                     </div>&ensp;
-
-                    <div class="form-check-inline">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Nữ
-                        </label>
-                    </div>
                     <br>
-                    <label>Tên đăng nhâp:</label>
-                    <input type="text" style="width: 250px" class="form-control" placeholder="First name"><br>
 
-                    <label>Mật khẩu:</label>
-                    <input type="text" style="width: 250px" class="form-control" placeholder="First name"><br>
+                    <label>Tên đăng nhâp:</label>
+                    <c:if test="${not empty obj.ID }">
+                    <input type="text" style="width: 250px" class="form-control"  value="${obj.taiKhoan}"  name="taiKhoan" readonly><br>
+                    </c:if>
+                    <c:if test="${empty obj.ID }">
+                        <input type="text" style="width: 250px" class="form-control" placeholder="Tài khoản"   name="taiKhoan" required><br>
+                    </c:if>
+
+
+                    <c:if test="${not empty obj.ID }">
+                        <label>Mật khẩu mới:</label>
+                        <input type="text" style="width: 250px" class="form-control" placeholder="Mật khẩu mới" name="matKhau" required><br>
+<%--                        <input type="text" style="width: 250px" class="form-control" placeholder="xác nhận lại"><br>--%>
+                    </c:if>
+                    <c:if test="${empty obj.ID }">
+                        <label>Mật khẩu:</label>
+                        <input type="text" style="width: 250px" class="form-control" placeholder="Mật khẩu" name="matKhau" required><br>
+                    </c:if>
 
                     <label>Email:</label>
-                    <input type="text" style="width: 250px" class="form-control" placeholder="First name"><br>
+                    <c:if test="${not empty obj.ID }">
+                        <input type="text" style="width: 250px" class="form-control" value="${obj.email}" name="email" required><br>
+                    </c:if>
+                    <c:if test="${empty obj.ID }">
+                        <input type="text" style="width: 250px" class="form-control" placeholder="Email" name="email" required><br>
+                    </c:if>
 
+                    <label>Số điện thoại:</label>
+                    <c:if test="${not empty obj.ID }">
+                        <input type="text" style="width: 250px" class="form-control" value="${obj.soDienThoai}" name="soDienThoai" required><br>
+                    </c:if>
+                    <c:if test="${empty obj.ID }">
+                        <input type="text" style="width: 250px" class="form-control" placeholder="Số điện thoại" name="soDienThoai"><br>
+                    </c:if>
 
+                    <c:if test="${not empty obj.ID }">
+                        <label>Người Sửa:</label>
+                        <input type="text" style="width: 250px" class="form-control" name="nguoiSua" required><br>
+                    </c:if>
+
+                    <label>Người tạo:</label>
+                    <c:if test="${not empty obj.ID }">
+                        <input type="text" style="width: 250px" class="form-control" value="${obj.nguoiTao}" name="nguoiTao" readonly><br>
+                    </c:if>
+                    <c:if test="${empty obj.ID }">
+                        <input type="text" style="width: 250px" class="form-control" placeholder="Người tạo" name="nguoiTao" required><br>
+                    </c:if>
                 </div>
 
                 <div class="col" style="margin-left:-250px; ">
-                    <label>Số điện thoại:</label>
-                    <input type="text" style="width: 250px" class="form-control" placeholder="First name"><br>
                     <h4>Quyền</h4>
                     <div class="form-check">
-                        <label class="form-check-label" >
-                            <input type="checkbox" class="form-check-input"  name="option1" value="something" checked>Option 1
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label" >
-                            <input type="checkbox" class="form-check-input"  name="option1" value="something" checked>Option 1
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label" >
-                            <input type="checkbox" class="form-check-input"  name="option1" value="something" checked>Option 1
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label" >
-                            <input type="checkbox" class="form-check-input"  name="option1" value="something" checked>Option 1
-                        </label>
-                    </div>
-                    <c:if test="${not empty model.id}">
-                        <button style="margin: 150px 0 0 0;" type="button" class="btn btn-primary">Cập nhập thông tin</button>
+                            <c:forEach items="${roles}" var="itemRole">
+                                <c:if test="${not empty obj.ID}">
+                                    <c:set var="check" value="false"/>
+                                    <c:forEach items="${tk_roles}" var="item_tk">
+                                        <c:if test="${itemRole.ID == item_tk}">
+                                            <c:set var="check" value="true"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:if test="${check == true}">
+                                        <div class="form-check">
+                                            <label class="form-check-label" >
+                                                <input type="checkbox" class="form-check-input"  value="${itemRole.ID}" checked>${itemRole.moTa}
+                                            </label>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${check == false}">
+                                        <div class="form-check">
+                                            <label class="form-check-label" >
+                                                <input type="checkbox" class="form-check-input"  value="${itemRole.ID}">${itemRole.moTa}
+                                            </label>
+                                        </div>
+                                    </c:if>
+                                </c:if>
 
+                                <c:if test="${empty obj.ID}">
+                                    <div class="form-check"  >
+                                        <label class="form-check-label" >
+                                            <input type="checkbox" class="form-check-input"  value="${itemRole.ID}">${itemRole.moTa}
+                                        </label>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                    </div>
+
+                    <div class="form-check-inline">
+                        <label>Trạng thái:</label>&ensp;
+                        <label class="form-check-label">
+                            <c:forEach items="${status}" var="item">
+                                <c:if test="${not empty obj.ID}">
+                                    <c:if test="${item.ID == obj.trangThai.ID}">
+                                        <input type="radio" class="form-check-input" name="trangThai" value="${item.ID}" checked > ${item.trangThai}
+                                    </c:if>
+                                    <c:if test="${item.ID != obj.trangThai.ID}">
+                                        <input type="radio" class="form-check-input" name="trangThai" value="${item.ID}"> ${item.trangThai}
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
+
+                        </label>
+                    </div>&ensp;
+
+                    <c:if test="${not empty obj.ID}">
+                        <input type="hidden" value="${obj.ID}" id="id" name="id"/>
+                        <button id = "btnAddOrUpdateAcc" style="margin: 150px 0 0 0;" type="button" class="btn btn-primary">Cập nhập</button>
                     </c:if>
-                    <c:if test="${empty model.id}">
-                        <button style="margin: 150px 0 0 0;" type="button" class="btn btn-primary">Thêm tài khoản</button>
-
+                    <c:if test="${empty obj.ID}">
+                        <input type="hidden" id="id" name="id"/>
+                        <button id = "btnAddOrUpdateAcc" style="margin: 150px 0 0 0;" type="button" class="btn btn-primary">Thêm tài khoản</button>
                     </c:if>
                     <button style="margin: 150px 0 0 0;" type="reset" class="btn btn-secondary">Hủy bỏ</button>
 
                 </div>
             </div>
         </form>
-
-
     </div>
-
 </div>
+<script src="<c:url value='/template/admin/jquery/jquery.min.js' />"></script>
+
+
+
+<%--<script>--%>
+<%--    e.preventDefault(); //ngắn chặn hành động mặc định của sự kiện&ndash;%&gt;--%>
+<%--    var rentArea = [];--%>
+<%--    var areaDescription = [];--%>
+<%--    var checkBoxValue = [];--%>
+<%--    var dataTemp = {};--%>
+<%--    var formData = $('#formSubmit').serializeArray();--%>
+<%--    $.each(formData, function (i, v) {--%>
+<%--        dataTemp["" + v.name + ""] = v.value;--%>
+<%--    });--%>
+<%--    $("input:checkbox[name=buildingTypes]:checked").each(function () {--%>
+<%--        checkBoxValue.push($(this).val());--%>
+<%--    });--%>
+<%--    $("input[name=rentArea]").each(function () {--%>
+<%--        rentArea.push($(this).val());--%>
+<%--    })--%>
+<%--    $("input[name=areaDescription]").each(function () {--%>
+<%--        areaDescription.push($(this).val());--%>
+<%--    })--%>
+<%--    dataTemp["buildingTypes"] = checkBoxValue;--%>
+<%--    dataTemp["rentArea"] = rentArea;--%>
+<%--    dataTemp["areaDescription"] = areaDescription;--%>
+<%--    var data = JSON.stringify(dataTemp);--%>
+<%--</script>--%>
+<script>
+    // var editor = '';
+    // $(document).ready(function(){
+    //     editor = CKEDITOR.replace( 'content');
+    // });
+
+
+
+    $('#btnAddOrUpdateAcc').click(function (e) {
+        e.preventDefault();//de tranh submit nham vao URL hien tai
+        var data = {};//khoi tao 1 mang chua du lieu
+        var formData = $('#formSubmit').serializeArray();//lay tuan tu gia trong form theo ten (name) da dat theo dang array roi chuyen vao bien formdata
+        $.each(formData, function (i, v) { //su dung vong for trong jquery gom 3 tham so lan luot la listData, function( vi tri, gia tri)
+            console.log(v); //lenh in ra man hinh console tren web
+            data[""+v.name+""] = v.value;//gan gia tri cho mang data de gửi về sever
+        });
+        // data["content"] = editor.getData();
+        var ids = $(' input[type=checkbox]:checked').map(function () {
+            return $(this).val();
+        }).get();
+        data['ids'] = ids;
+        var id = $('#id').val();
+        if (id == "") {
+            addAcc(data);
+        } else {
+            updateAcc(data);
+        }
+    });
+    function addAcc(data) {
+        $.ajax({
+            url: '${APIurl}',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+                alert("Addition infomation successful!");
+                window.location.href = "${NewURL}";
+            },
+            error: function (error) {
+                alert("Addition infomation faild!");
+                window.location.href = "${NewURL}";
+            }
+        });
+    }
+    function updateAcc(data) {
+        $.ajax({
+            url: '${APIurl}',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+                alert("Update infomation successful!");
+                window.location.href = "${NewURL}";
+            },
+            error: function (error) {
+                alert("Update infomation faild!");
+                window.location.href = "${NewURL}";
+            }
+        });
+    }
+</script>
 </body>
 </html>

@@ -18,7 +18,7 @@ public interface GiangVienRepository extends JpaRepository<GiangVien,Long> {
     GiangVien findByLectureCode(@Param("code") String code);
 
     @Query("select a from GiangVien a where a.id = :id")
-    GiangVien findByLectureID(@Param("id") Long id);
+    GiangVien findByID(@Param("id") Long id);
 
     @Query("SELECT u FROM GiangVien u WHERE (:fromDate IS NULL OR u.ngayBatDau >= :fromDate)" +
             "AND (:toDate IS NULL OR u.ngayBatDau <= :toDate)" +

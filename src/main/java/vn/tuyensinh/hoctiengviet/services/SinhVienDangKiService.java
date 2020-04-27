@@ -6,7 +6,7 @@ import vn.tuyensinh.hoctiengviet.model.request.SinhVienRegister;
 import java.util.List;
 
 public interface SinhVienDangKiService {
-    List<SinhVienDangKi> findAll();
+    List<SinhVienDangKi> findAll(Integer pageNo,Integer pageSize);
     SinhVienDangKi findByID(Long id);
     SinhVienDangKi findByPassport(String passport);
     void insert(SinhVienRegister sinhVienRegister);

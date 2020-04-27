@@ -14,7 +14,7 @@ public interface GioiTinhRepository extends JpaRepository<GioiTinh,Integer> {
     @Query("select a from GioiTinh a where a.gioiTinh = :type")
    GioiTinh findByGender(@Param("type") String type);
 
-    @Query("select a from GioiTinh a where a.id= :id")
-    GioiTinh findByID(@Param("id") Integer id);
+    @Query("select a from GioiTinh a where a.id = :ids")
+    GioiTinh findByID(@Param("ids") Integer ids);
 
 }

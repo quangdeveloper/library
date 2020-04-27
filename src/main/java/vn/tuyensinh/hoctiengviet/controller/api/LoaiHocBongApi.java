@@ -16,7 +16,7 @@ public class LoaiHocBongApi {
     @Autowired
     private LoaiHocBongServiceImpl loaiHocBongService;
 
-    @GetMapping("/admin/scholarships")
+    @GetMapping("/v1/api/admin/scholarships")
     public ResponseEntity<List<LoaiHocBong>> findAll() {
         List<LoaiHocBong> list = loaiHocBongService.findAll();
         if (list.isEmpty()) {
@@ -24,7 +24,7 @@ public class LoaiHocBongApi {
         }
         return ResponseEntity.ok(list);
     }
-    @GetMapping("/admin/scholarships/{id}")
+    @GetMapping("/v1/api/admin/scholarships/{id}")
     public ResponseEntity<LoaiHocBong> findByID(@PathVariable("id")Integer id) {
         LoaiHocBong obj= loaiHocBongService.findByID(id);
         if (obj==null) {

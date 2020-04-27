@@ -12,6 +12,15 @@ public class GiangVienRequest {
     private String soDienThoai;
     private Timestamp ngayBatDau;
     private Timestamp ngayKetThuc;
+    private Integer gioiTinh;
+
+    public Integer getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(Integer gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
 
     public Timestamp getNgayBatDau() {
         return ngayBatDau;
